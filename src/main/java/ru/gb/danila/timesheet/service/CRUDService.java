@@ -10,5 +10,7 @@ public interface CRUDService<Entity> {
 
     Entity create(Entity entity);
 
+    Entity update(Long id, Entity entity);
+
     void delete(Long id);
 }

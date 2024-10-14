@@ -49,6 +49,15 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.create(project));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Project> update(@PathVariable Long id, @RequestBody Project project){
+        try {
+            return ResponseEntity.ok(projectService.update(id, project));
+        }catch (NoSuchElementException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         try{

@@ -41,6 +41,11 @@ public class TimesheetService implements CRUDService<Timesheet> {
     }
 
     @Override
+    public Timesheet update(Long id, Timesheet timesheet) {
+        return timesheetRepository.update(id, timesheet);
+    }
+
+    @Override
     public void delete(Long id) {
         timesheetRepository.delete(id);
     }

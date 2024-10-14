@@ -52,6 +52,15 @@ public class TimesheetController {
         }
    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Timesheet> update(@PathVariable Long id, @RequestBody Timesheet timesheet){
+        try {
+            return ResponseEntity.ok(timesheetService.update(id, timesheet));
+        }catch (NoSuchElementException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         try {

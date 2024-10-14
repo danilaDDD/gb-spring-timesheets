@@ -31,6 +31,11 @@ public class ProjectService implements CRUDService<Project>{
     }
 
     @Override
+    public Project update(Long id, Project project) {
+        return projectRepository.update(id, project);
+    }
+
+    @Override
     public void delete(Long id) {
         projectRepository.delete(id);
     }

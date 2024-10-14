@@ -32,6 +32,16 @@ public class TimesheetRepository implements CRUDRepository<Timesheet>{
         return timesheet;
     }
 
+    @Override
+    public Timesheet update(Long id, Timesheet timesheet) {
+        Timesheet existTimesheet = findById(id).orElseThrow(NoSuchElementException::new);
+
+        existTimesheet.setProjectId(timesheet.getProjectId());
+        existTimesheet.setMinutes(timesheet.getMinutes());
+
+        return existTimesheet;
+    }
+
     public void delete(Long id){
         findById(id).orElseThrow(NoSuchElementException::new);
     }

@@ -33,6 +33,14 @@ public class ProjectRepository implements CRUDRepository<Project>{
     }
 
     @Override
+    public Project update(Long id, Project project) {
+        Project existProject = findById(id).orElseThrow(NoSuchElementException::new);
+        existProject.setName(project.getName());
+
+        return existProject;
+    }
+
+    @Override
     public void delete(Long id) {
         Project project = findById(id).orElseThrow(NoSuchElementException::new);
         projects.remove(project);
