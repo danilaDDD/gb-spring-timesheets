@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.danila.timesheet.model.Project;
 import ru.gb.danila.timesheet.model.Timesheet;
-import ru.gb.danila.timesheet.repository.ProjectRepository;
 import ru.gb.danila.timesheet.service.ProjectService;
 import ru.gb.danila.timesheet.service.TimesheetService;
 
