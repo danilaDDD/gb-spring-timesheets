@@ -9,7 +9,7 @@ import ru.gb.danila.timesheet.exceptions.HttpStatusNotFoundException;
 @Controller
 @ControllerAdvice
 public class ExceptionHandlerController {
-    @GetMapping
+    @GetMapping("/not-found")
     public String notFoundPage(){
         return "not-found.html";
     }

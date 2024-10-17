@@ -25,7 +25,7 @@
         <td><span th:text="${timesheet.projectName}"></span></td>
         <td><span th:text="${timesheet.timesheetMinutes}"></span></td>
         <td><span th:text="${timesheet.timesheetCreatedAt}"></span></td>
-        <td><a th:href="@{'/timesheets/{id}'(id=${timesheet.id})}">Перейти к записи</a></td>
+        <td><a th:href="@{'/timesheets/{id}'(id=${timesheet.timesheetId})}">Перейти к записи</a></td>
     </tr>
     </tbody>
 </table>
