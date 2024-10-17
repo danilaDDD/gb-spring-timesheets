@@ -12,6 +12,7 @@
 Проект: <span th:text="${timesheet.projectName}"></span> <br>
 Минут потрачено: <span th:text="${timesheet.timesheetMinutes}"></span> <br>
 Дата создания: <span th:text="${timesheet.timesheetCreatedAt}"></span> <br>
+<a th:href="@{'/home/projects/{id}'(id=${timesheet.projectId})}">Перейти к проекту</a>
 
 </body>
 </html>
