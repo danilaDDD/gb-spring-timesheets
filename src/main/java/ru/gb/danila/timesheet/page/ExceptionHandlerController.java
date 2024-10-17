@@ -14,6 +14,17 @@ public class ExceptionHandlerController {
         return "not-found.html";
     }
 
+    @GetMapping("/opps")
+    public String getInternalServerErrorPage(){
+        return "opps.html";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String internalServerErrorHandler(){
+        return "redirect:/opps";
+    }
+
+
     @ExceptionHandler(HttpStatusNotFoundException.class)
     public String notFoundHandler(){
         return "redirect:/not-found";

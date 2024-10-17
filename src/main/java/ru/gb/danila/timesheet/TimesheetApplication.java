@@ -24,7 +24,7 @@ public class TimesheetApplication {
 		TimesheetService timesheetService = ctx.getBean(TimesheetService.class);
 		ProjectService projectService = ctx.getBean(ProjectService.class);
 
-		for (int i = 1; i <= 5 ; i++) {
+		for (int i = 1; i <= 4 ; i++) {
 			projectService.create(new Project((long)i, String.format("Project # %s", i)));
 		}
 
@@ -32,7 +32,7 @@ public class TimesheetApplication {
 		for (int i = 1; i <= 10; i++) {
 			Timesheet timesheet = new Timesheet(
 					(long) i,
-					ThreadLocalRandom.current().nextLong(1, 6),
+					ThreadLocalRandom.current().nextLong(1, 5),
 					ThreadLocalRandom.current().nextInt(100, 10000),
 					createdAt.plusDays(i)
 			);

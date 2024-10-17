@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TimesheetPageDto {
+    private String projectId;
     private String timesheetId;
     private String timesheetMinutes;
     private String timesheetCreatedAt;
