@@ -1,66 +1,17 @@
 package ru.gb.danila.timesheet.repository;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.gb.danila.timesheet.model.Timesheet;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
-@Repository
-public class TimesheetRepository implements CRUDRepository<Timesheet>{
-    private static long sequence = 1L;
-    private final List<Timesheet> timesheets = new ArrayList<>();
+public interface TimesheetRepository extends JpaRepository<Timesheet, Long> {
+    List<Timesheet> findAllByCreatedAtAfter(LocalDate createdAt);
 
-    public Optional<Timesheet> findById(Long id){
-        return timesheets.stream()
-                .filter(timesheet -> timesheet.getId().equals(id))
-                .findFirst();
-    }
+    List<Timesheet> findAllByCreatedAtBefore(LocalDate createdAt);
 
-    public List<Timesheet> findAll(){
-        return List.copyOf(timesheets);
-    }
+    List<Timesheet> findAllByProjectId(Long projectId);
 
-    public Timesheet create(Timesheet timesheet){
-        timesheet.setId(sequence++);
-        timesheet.setCreatedAt(LocalDate.now());
-        timesheets.add(timesheet);
-
-        return timesheet;
-    }
-
-    @Override
-    public Timesheet update(Long id, Timesheet timesheet) {
-        Timesheet existTimesheet = findById(id).orElseThrow(NoSuchElementException::new);
-
-        existTimesheet.setProjectId(timesheet.getProjectId());
-        existTimesheet.setMinutes(timesheet.getMinutes());
-
-        return existTimesheet;
-    }
-
-    public void delete(Long id){
-        findById(id).orElseThrow(NoSuchElementException::new);
-    }
-
-    public List<Timesheet> findCreatedAtAfter(LocalDate createdAtAfter) {
-        return timesheets.stream()
-                .filter(timesheet -> timesheet.getCreatedAt().isAfter(createdAtAfter))
-                .toList();
-    }
-
-    public List<Timesheet> findCreatedAtBefore(LocalDate createdAtBefore) {
-        return timesheets.stream()
-                .filter(timesheet -> timesheet.getCreatedAt().isBefore(createdAtBefore))
-                .toList();
-    }
-
-    public List<Timesheet> findTimesheetsByProjectId(Long projectId) {
-        return timesheets.stream()
-                .filter(it -> it.getProjectId().equals(projectId))
-                .toList();
-    }
+    List<Timesheet> findAllByEmployeeId(Long employeeId);
 }

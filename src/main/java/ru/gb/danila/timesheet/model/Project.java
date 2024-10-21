@@ -1,11 +1,20 @@
 package ru.gb.danila.timesheet.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.List;
+
+@Entity
+@Table(name = "project")
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class Project {
-    Long id;
-    String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @EqualsAndHashCode.Include
+    @Column(name = "id", nullable = false)
+    private Long id;
+    @Column(name = "name", nullable = false, length = 50)
+    private String name;
 }

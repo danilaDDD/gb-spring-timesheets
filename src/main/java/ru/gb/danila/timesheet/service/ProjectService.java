@@ -1,6 +1,7 @@
 package ru.gb.danila.timesheet.service;
 
 import org.springframework.stereotype.Service;
+import ru.gb.danila.timesheet.exceptions.EntityNotFoundException;
 import ru.gb.danila.timesheet.model.Project;
 import ru.gb.danila.timesheet.repository.ProjectRepository;
 
@@ -27,16 +28,21 @@ public class ProjectService implements CRUDService<Project>{
 
     @Override
     public Project create(Project project) {
-        return projectRepository.create(project);
+        return projectRepository.save(project);
     }
 
     @Override
     public Project update(Long id, Project project) {
-        return projectRepository.update(id, project);
+        Project existProject = projectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id, Project.class));
+
+        existProject.setName(project.getName());
+
+        return projectRepository.save(existProject);
     }
 
     @Override
     public void delete(Long id) {
-        projectRepository.delete(id);
+        projectRepository.deleteById(id);
     }
 }
