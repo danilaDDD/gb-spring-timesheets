@@ -6,27 +6,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
-@Schema(name = "Сотрудник")
+@Schema(description = "Сотрудник")
 @Entity
 @Table(name = "employee")
 @Data
 @NoArgsConstructor
 public class Employee {
-    @Schema(name = "Идентификатор")
+    @Schema(description = "Идентификатор")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Schema(name = "Имя")
+    @Schema(description = "Имя")
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Schema(name = "Фамилия")
+    @Schema(description = "Фамилия")
     @Column(name = "second_name", nullable = false, length = 50)
     private String secondName;
 
-    @Schema(name = "Проекты")
+    @Schema(description = "Проекты")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
        name = "employee_project",

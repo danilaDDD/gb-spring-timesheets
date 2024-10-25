@@ -9,32 +9,32 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Schema(name = "Временная метка")
+@Schema(description = "Временная метка")
 @Entity
 @Table(name = "timesheet")
 @Data
 @NoArgsConstructor
 public class Timesheet {
-    @Schema(name = "Идентификатор")
+    @Schema(description = "Идентификатор")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @EqualsAndHashCode.Include
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Schema(name = "Идентификатор проекта")
+    @Schema(description = "Идентификатор проекта")
     @Column(name = "project_id", nullable = false)
     private Long projectId;
 
-    @Schema(name = "количество минут")
+    @Schema(description = "количество минут")
     @Column(name = "minutes", nullable = false)
     private int minutes;
 
-    @Schema(name = "Дата создания")
+    @Schema(description = "Дата создания")
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
 
-    @Schema(name = "Идентификатор сотрудника")
+    @Schema(description = "Идентификатор сотрудника")
     @Column(name = "employee_id", nullable = false)
     private Long employeeId;
 }

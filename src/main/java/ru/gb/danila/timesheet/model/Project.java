@@ -6,20 +6,20 @@ import lombok.*;
 
 import java.util.List;
 
-@Schema(name = "Проект")
+@Schema(description = "Проект")
 @Entity
 @Table(name = "project")
 @Data
 @NoArgsConstructor
 public class Project {
-    @Schema(name = "Идентификатор")
+    @Schema(description = "Идентификатор")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @EqualsAndHashCode.Include
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Schema(name = "Название")
+    @Schema(description = "Название")
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 }
