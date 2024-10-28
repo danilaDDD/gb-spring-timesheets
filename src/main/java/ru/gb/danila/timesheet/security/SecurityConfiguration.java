@@ -26,18 +26,6 @@ public class SecurityConfiguration {
 
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            if (request.getRequestURI().startsWith("/timesheets") ||
-                                    request.getRequestURI().startsWith("/projects") ||
-                                    request.getRequestURI().startsWith("/employees")) {
-                                response.sendError(HttpStatus.UNAUTHORIZED.value(),
-                                        "Access Denied");
-                            } else {
-                                response.sendRedirect("/login");
-                            }
-                        })
-                )
                 .formLogin(form -> form
                         .permitAll()
                 )
