@@ -24,20 +24,37 @@ public class CustomAspect {
         Method method = signature.getMethod();
 
         if(method.isAnnotationPresent(Recover.class)){
-            Object result = null;
-            try{
-                result = joinPoint.proceed();
-                return result;
-            } catch (Throwable e) {
-                log.error("throw error {}  message {} with method {}", e.getClass(), e.getMessage(), method.getName());
-                return getDefault(result, method);
+            if(!method.getReturnType().getName().equals("void")) {
+                try {
+                    return joinPoint.proceed();
+                } catch (Throwable e) {
+                    logException(e, method);
+                    logException(e, method);
+                    return getDefault(method);
+                }
+
+
+            }else {
+                try{
+                    joinPoint.proceed();
+                }catch (Throwable e){
+                    logException(e, method);
+                }
+
+                return new Object();
             }
+
+
         }else{
             throw new IllegalArgumentException("Recover annotation may be used with method!");
         }
     }
 
-    private Object getDefault(Object result, Method method) {
+    private void logException(Throwable e, Method method) {
+        log.error("throw error {}  message {} with method {}", e.getClass(), e.getMessage(), method.getName());
+    }
+
+    private Object getDefault(Method method) {
         Class<?> returnType = method.getReturnType();
         if(returnType.isPrimitive()){
             return switch (returnType.getName()){
@@ -45,7 +62,7 @@ public class CustomAspect {
                 case "double" -> 0.0;
                 case "long" -> 0L;
                 case "short", "byte" -> String.valueOf(0);
-                default -> new Object();
+                default -> throw new IllegalArgumentException("return void is not available");
             };
         }
         return null;
