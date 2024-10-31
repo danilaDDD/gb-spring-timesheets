@@ -15,10 +15,8 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 public class CustomAspect {
-    @Pointcut("@annotation(ru.gb.danila.timesheet.annotations.Recover)")
-    public void recoverMethodsPointcut(){}
 
-    @Around("recoverMethodsPointcut()")
+    @Around("@annotation(ru.gb.danila.timesheet.annotations.Recover)")
     public Object recoverMethod(ProceedingJoinPoint joinPoint){
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
