@@ -2,7 +2,6 @@ package ru.gb.danila.timesheet.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -31,21 +30,24 @@ public class CustomAspect {
                 return result;
             } catch (Throwable e) {
                 log.error("throw error {}  message {} with method {}", e.getClass(), e.getMessage(), method.getName());
-                return getDefault(result);
+                return getDefault(result, method);
             }
         }else{
             throw new IllegalArgumentException("Recover annotation may be used with method!");
         }
     }
 
-    private Object getDefault(Object result) {
-        if(result != null) {
-            Class<?> clazz = result.getClass();
-            if (clazz.isPrimitive()) {
-                return 0;
-            }
+    private Object getDefault(Object result, Method method) {
+        Class<?> returnType = method.getReturnType();
+        if(returnType.isPrimitive()){
+            return switch (returnType.getName()){
+                case "int" -> 0;
+                case "double" -> 0.0;
+                case "long" -> 0L;
+                case "short", "byte" -> String.valueOf(0);
+                default -> new Object();
+            };
         }
-
         return null;
     }
 }
