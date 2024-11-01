@@ -32,4 +32,10 @@ public class TestRecoverComponent {
     public void throwIllegalArgumentException(){
         throw new IllegalArgumentException("throwIllegalArgumentException");
     }
+
+    @SneakyThrows
+    @Recover
+    public int returnIntSuccessfully(){
+        return 0;
+    }
 }

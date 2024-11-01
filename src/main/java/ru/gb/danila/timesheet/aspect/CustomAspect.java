@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 public class CustomAspect {
 
     @Around("@annotation(ru.gb.danila.timesheet.annotations.Recover)")
-    public Object recoverMethod(ProceedingJoinPoint joinPoint){
+    public Object recoverMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
@@ -50,11 +50,11 @@ public class CustomAspect {
         return null;
     }
 
-    private void throwNoRecoverExceptionsIfNeed(Throwable th,  Class<? extends Throwable>[] noRecoverFor){
+    private void throwNoRecoverExceptionsIfNeed(Throwable th,  Class<? extends Throwable>[] noRecoverFor) throws Throwable {
         Class<? extends Throwable> throwClass = th.getClass();
         for(var noRecoverClazz: noRecoverFor){
             if(noRecoverClazz.isAssignableFrom(throwClass)){
-                throw new RuntimeException(th);
+                throw th;
             }
         }
     }

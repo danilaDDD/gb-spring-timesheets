@@ -19,8 +19,9 @@ public class TimesheetApplication {
 			System.out.println(e.getMessage());
 		}
 		component.returnVoidWithException("");
-		System.out.printf("return 0 with return int with error %s", component.returnIntWithIOException());
-		System.out.printf("return null with return String %s", component.returnStringWithException(0));
+		System.out.printf("return 0 with return int with error %s%n", component.returnIntWithIOException());
+		System.out.printf("return null with return String %s%n", component.returnStringWithException(0));
+		System.out.printf("return int successfully %s%n", component.returnIntSuccessfully());
 
 
 	}
