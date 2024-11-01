@@ -13,9 +13,16 @@ public class TimesheetApplication {
 
 		TestRecoverComponent component = ctx.getBean(TestRecoverComponent.class);
 
+		try {
+			component.throwIllegalArgumentException();
+		}catch (IllegalArgumentException e){
+			System.out.println(e.getMessage());
+		}
 		component.returnVoidWithException("");
 		System.out.printf("return 0 with return int with error %s", component.returnIntWithIOException());
 		System.out.printf("return null with return String %s", component.returnStringWithException(0));
+
+
 	}
 
 

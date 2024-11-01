@@ -22,29 +22,40 @@ public class CustomAspect {
         Method method = signature.getMethod();
 
         if(method.isAnnotationPresent(Recover.class)){
-            if(!method.getReturnType().getName().equals("void")) {
-                try {
-                    return joinPoint.proceed();
-                } catch (Throwable e) {
-                    logException(e, method);
-                    logException(e, method);
-                    return getDefault(method);
-                }
+            Recover recover = method.getAnnotation(Recover.class);
+            Class<? extends Throwable>[] noRecoverFor = recover.noRecoverFor();
 
-
-            }else {
+            if(method.getReturnType().getName().equals("void")) {
                 try{
                     joinPoint.proceed();
                 }catch (Throwable e){
+                    throwNoRecoverExceptionsIfNeed(e, noRecoverFor);
                     logException(e, method);
                 }
 
-                return new Object();
+            }else {
+                try {
+                    return joinPoint.proceed();
+                } catch (Throwable e) {
+                    throwNoRecoverExceptionsIfNeed(e, noRecoverFor);
+                    logException(e, method);
+                    return getDefault(method);
+                }
             }
-
 
         }else{
             throw new IllegalArgumentException("Recover annotation may be used with method!");
+        }
+
+        return null;
+    }
+
+    private void throwNoRecoverExceptionsIfNeed(Throwable th,  Class<? extends Throwable>[] noRecoverFor){
+        Class<? extends Throwable> throwClass = th.getClass();
+        for(var noRecoverClazz: noRecoverFor){
+            if(noRecoverClazz.isAssignableFrom(throwClass)){
+                throw new RuntimeException(th);
+            }
         }
     }
 
