@@ -2,7 +2,7 @@ spring:
   application:
     name: timesheet-page
 server:
-  port: 8082
+  port: ${PORT:0}
 eureka:
   client:
     serviceUrl:
