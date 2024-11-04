@@ -1,4 +1,4 @@
-package ru.gb.danila.timesheet.annotations;
+package ru.gb.danila.timesheet.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

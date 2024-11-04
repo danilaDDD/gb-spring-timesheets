@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import ru.gb.danila.timesheet.annotations.Recover;
 
 import java.lang.reflect.Method;
 
@@ -15,7 +14,7 @@ import java.lang.reflect.Method;
 @Component
 public class CustomAspect {
 
-    @Around("@annotation(ru.gb.danila.timesheet.annotations.Recover)")
+    @Around("@annotation(ru.gb.danila.timesheet.aspect.Recover)")
     public Object recoverMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
