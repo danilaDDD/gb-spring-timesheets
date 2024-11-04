@@ -3,7 +3,6 @@ package ru.gb.danila.timesheetpage.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ru.gb.danila.timesheetpage.dto.ProjectPageDto;
 import ru.gb.danila.timesheetpage.dto.ProjectResponse;
@@ -21,7 +20,7 @@ public class ProjectPageService {
 
     public List<ProjectPageDto> getAll(){
         try {
-            return Arrays.asList(restTemplate.getForObject(rootUrl, ProjectResponse[].class))
+            return getProjectResponses()
                     .stream()
                     .map(this::convert)
                     .toList();
@@ -46,8 +45,22 @@ public class ProjectPageService {
                     .map(this::convert)
                     .orElseThrow(() -> new EntityNotFoundException(String.format("project by id %s not found", id)));
         }catch (HttpClientErrorException.NotFound e){
-            throw new EntityNotFoundException(String.format("project by id %s not found", id);
+            throw new EntityNotFoundException(String.format("project by id %s not found", id));
         }
 
+    }
+
+    public Optional<ProjectResponse> getProjectResponseById(Long id){
+        try {
+            String url = rootUrl + "/{id}";
+            return Optional.of(restTemplate.getForObject(url, ProjectResponse.class, id));
+        }catch (HttpClientErrorException.NotFound e) {
+            return Optional.empty();
+        }
+
+    }
+
+    public List<ProjectResponse> getProjectResponses(){
+        return Arrays.asList(restTemplate.getForObject(rootUrl, ProjectResponse[].class));
     }
 }
